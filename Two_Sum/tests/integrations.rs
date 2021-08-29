@@ -1,4 +1,4 @@
-use two_sum;
+extern mod two_sum;
 
 #[test]
 fn it_adds_two() {
