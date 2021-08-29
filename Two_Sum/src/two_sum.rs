@@ -40,7 +40,7 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
                 println!("Target was: {}", target);
                 println!("Solution: {}, {}", original_i_index, original_mid_index);
                 
-                return [(*original_i_index).try_into().unwrap(), (*original_mid_index).try_into().unwrap()].to_vec() 
+                return [(*original_i_index).try_into().unwrap(), (*original_mid_index).try_into().unwrap()].to_vec()
             }
             else if sum < target{
                 print!("\t Sum < Target");

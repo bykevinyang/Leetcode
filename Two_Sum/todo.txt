@@ -1,0 +1,5 @@
+Hash map messes up on input: (3, 3) since it only takes in unique elements
+Solution: find out a way to include multiple instances for hash map
+
+Idea 1: Have the hashmap point from value to a tuple of indexes
+
