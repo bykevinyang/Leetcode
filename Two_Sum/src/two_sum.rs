@@ -1,5 +1,4 @@
 use std::convert::TryInto;
-use std::convert::TryFrom;
 use std::collections::HashMap;
 
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
@@ -23,15 +22,21 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
         let mut upper: usize = sorted.len();
         let mut lower = i+1;
         let mut mid: usize = (upper + lower)/2;
-
         while lower <= upper{
             let addend = sorted[mid];
             let sum = base + addend;
-            print!("Base: {}, Addend: {}, Sum: {}", base, addend, sum);
+            println!("Base: {}, Addend: {}, Sum: {}", base, addend, sum);
 
             if sum == target{
                 let original_i_index = hash_map.get(&sorted[i]).unwrap();
                 let original_mid_index = hash_map.get(&sorted[mid]).unwrap();
+
+                if sorted[i] == sorted[mid]{
+                    let iter_num = nums.to_vec();
+                    let updated_original_i_index = iter_num.iter().position(|&x| x==sorted[mid]).unwrap();
+                    println!("Correct indexes are: {}, {}", original_i_index, updated_original_i_index);
+                    return [(updated_original_i_index).try_into().unwrap(), (*original_mid_index).try_into().unwrap()].to_vec()
+                }
 
                 println!("\t Sum = Target");
                 print!("\n");
@@ -39,7 +44,7 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
                 println!("Values are: {}, {}", sorted[i], sorted[mid]);
                 println!("Target was: {}", target);
                 println!("Solution: {}, {}", original_i_index, original_mid_index);
-                
+
                 return [(*original_i_index).try_into().unwrap(), (*original_mid_index).try_into().unwrap()].to_vec()
             }
             else if sum < target{
@@ -56,6 +61,6 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
         } 
     i += 1;
     }
-    println!("Gone through everything");
-    return [1,2].to_vec()
+    println!("Gone through everything, no solution");
+    return [0, 0].to_vec();
 }
