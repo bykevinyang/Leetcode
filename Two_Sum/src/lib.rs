@@ -19,4 +19,9 @@ mod tests{
     fn example3(){
         assert_eq!(two_sum::two_sum([3,3].to_vec(), 6), [0, 1]);
     }
+
+    #[test]
+    fn example4(){
+        assert_eq!(two_sum::two_sum([3,2,3].to_vec(), 6), [0, 2])
+    }
 }
