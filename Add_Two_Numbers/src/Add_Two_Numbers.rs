@@ -1,5 +1,3 @@
-use std::collections::linked_list;
-
 // Definition for singly-linked list.
 #[derive(PartialEq, Eq, Clone, Debug)]
 pub struct ListNode {
@@ -106,10 +104,6 @@ pub fn check_len(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> bool {
 }
 
 pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-    
-    // have some carry value that will add to the next value in the linked list
-    // Aporach: get the two cooropsonding vals of l1, l2, add them together, get a carry bit, save that carry bit then
-        // move to next value pair.
     let mut node1 = l1;
     let mut node2 = l2;
     println!("Node1: {:?}", node1);
@@ -135,11 +129,13 @@ pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> 
             carry = 1;
             sum = sum - 10;
             println!("Carry: {:?}", carry);
+        } else { 
+            carry = 0;
         }
 
         println!("Sum is: {:?}\n", sum);
         sums.push(sum);
-        // Fix this conditioning when lists aren't same length
+        
         if node1 == None || node2 == None {
             println!("Current sums vec: {:?}", sums);
             println!("Breaking out of loop");
@@ -158,6 +154,8 @@ pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> 
             carry = 1;
             sum = sum - 10;
             println!("Carry: {:?}", carry);
+        }else {
+            carry = 0;
         }
 
         sums.push(sum);
@@ -171,12 +169,15 @@ pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> 
         let linked_list = node2.unwrap();
         let val = linked_list.val;
 
+        println!("Carry is: {:?}", carry);
         let mut sum = carry + val;
 
         if sum > 9 {
             carry = 1;
             sum = sum - 10;
             println!("Carry: {:?}", carry);
+        } else {
+            carry = 0;
         }
 
         sums.push(sum);
@@ -185,50 +186,12 @@ pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> 
         node2 = linked_list.next;
     }
 
-    if add_carry {
+    if carry != 0 {
         sums.push(carry);
     }
+    println!("Carry is :{} before end", carry);
 
     println!("Final sums vec: {:?}", sums);
-    // while node2 != None {
-    //     // Node2 has values to read
-    //     let linked_list2 = node2.unwrap();
-    //     let node2_val = linked_list2.val;
 
-    //     let mut sum = carry + node2_val;
-        
-    //     if sum > 9 {
-    //         carry = sum % 9;
-    //         sum = 0;
-    //         println!("Carry: {:?}", carry);
-    //     }
-
-    //     sums.push(sum);
-
-    //     node2 = linked_list2.next;
-    // }
-
-    // while node1 != None {
-    //     // Node1 has values to read
-    //     let linked_list1 = node1.unwrap();
-    //     let node1_val = linked_list1.val;
-
-    //     let mut sum = carry + node1_val;
-        
-    //     if sum > 9 {
-    //         carry = sum % 9;
-    //         sum = 0;
-    //         println!("Carry: {:?}", carry);
-    //     }
-
-    //     sums.push(sum);
-    //     println!("Sum: {:?}", sums);
-
-    //     node1 = linked_list1.next;
-    // }
-
-    if add_carry == false {
-        sums.reverse();
-    }
     return construct_link(sums); 
 }
