@@ -119,6 +119,7 @@ pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> 
     
     let mut sums: Vec<i32> = vec![];
 
+    let mut add_carry = false;
     loop {
         let linked_list1 = node1.unwrap(); 
         let linked_list2 = node2.unwrap(); 
@@ -129,21 +130,66 @@ pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> 
         let node2_val = linked_list2.val;
 
         let mut sum = node1_val + node2_val + carry;
-        println!("Sum is: {:?}\n", sum);
 
         if sum > 9 {
-            carry = sum % 9;
-            sum = 0;
+            carry = 1;
+            sum = sum - 10;
+            println!("Carry: {:?}", carry);
+        }
+
+        println!("Sum is: {:?}\n", sum);
+        sums.push(sum);
+        // Fix this conditioning when lists aren't same length
+        if node1 == None || node2 == None {
+            println!("Current sums vec: {:?}", sums);
+            println!("Breaking out of loop");
+            break;
+        }
+    }
+
+    while node1 != None && node2 == None{
+        add_carry = true;
+        let linked_list = node1.unwrap();
+        let val = linked_list.val;
+
+        let mut sum = carry + val;
+
+        if sum > 9 {
+            carry = 1;
+            sum = sum - 10;
             println!("Carry: {:?}", carry);
         }
 
         sums.push(sum);
-        // Fix this conditioning when lists aren't same length
-        if node1 == None || node2 == None {
-            break;
-        }  
+        println!("Sum is: {:?}\n", sum);
+
+        node1 = linked_list.next;
     }
 
+    while node2 != None && node1 == None{
+        add_carry = true;
+        let linked_list = node2.unwrap();
+        let val = linked_list.val;
+
+        let mut sum = carry + val;
+
+        if sum > 9 {
+            carry = 1;
+            sum = sum - 10;
+            println!("Carry: {:?}", carry);
+        }
+
+        sums.push(sum);
+        println!("Sum is: {:?}\n", sum);
+        
+        node2 = linked_list.next;
+    }
+
+    if add_carry {
+        sums.push(carry);
+    }
+
+    println!("Final sums vec: {:?}", sums);
     // while node2 != None {
     //     // Node2 has values to read
     //     let linked_list2 = node2.unwrap();
@@ -181,6 +227,8 @@ pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> 
     //     node1 = linked_list1.next;
     // }
 
-    sums.reverse();
+    if add_carry == false {
+        sums.reverse();
+    }
     return construct_link(sums); 
 }
