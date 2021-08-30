@@ -189,9 +189,5 @@ pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> 
     if carry != 0 {
         sums.push(carry);
     }
-    println!("Carry is :{} before end", carry);
-
-    println!("Final sums vec: {:?}", sums);
-
     return construct_link(sums); 
 }
